@@ -15,6 +15,7 @@
     :showAllDayPanel="false"
     :height="600"
     @onAppointmentFormOpening="onAppointmentFormOpening"
+    :editing="editing"
   >
   </DxScheduler>
 </template>
@@ -39,7 +40,8 @@ export default {
       views: ["day", "timelineDay"],
       currentDate: new Date(2015, 4, 25),
       editAppointmentData: {},
-      isCustomPopupVisible: false
+      isCustomPopupVisible: false,
+      editing: {allowResizing: false, allowDragging: false}
     };
   },
   computed: {
