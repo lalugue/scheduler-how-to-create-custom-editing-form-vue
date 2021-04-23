@@ -1,12 +1,25 @@
 <template>
   <div>
-     <DxButton :text="getText" @click="clickHandler" />
+     <DxScheduler
+      id="scheduler"
+      :data-source="dataSource"
+      :views="views"
+      currentView="day"
+      :currentDate="currentDate"
+      :firstDayOfWeek="0"
+      :startDayHour="9"
+      :endDayHour="23"
+      :showAllDayPanel="false"
+      :height="600">
+     </DxScheduler>
   </div>
 </template>
 
 <script>
 
-import DxButton from 'devextreme-vue/button';
+import DxScheduler from 'devextreme-vue/scheduler';
+
+import { data, rows, seats } from './data.js';
 
 export default {
   name: 'Home',
@@ -14,11 +27,15 @@ export default {
     msg: String
   },
   components: {
-    DxButton
+    DxScheduler
   },
   data(){
      return {
-        count: 0
+        dataSource: data,
+        rows: rows,
+        seats: seats,
+        views: ['day', 'timelineDay'],
+        currentDate: new Date(2015, 4, 25)
      }
   },
   computed: {
