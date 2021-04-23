@@ -2,7 +2,7 @@
   <div class="long-title">
     <h3>DXCinema Upcoming Movies</h3>
   </div>
-  
+
   <DxScheduler
     id="scheduler"
     :data-source="dataSource"
@@ -14,20 +14,20 @@
     :endDayHour="23"
     :showAllDayPanel="false"
     :height="600"
+    @onAppointmentFormOpening="onAppointmentFormOpening"
   >
   </DxScheduler>
 </template>
 
 <script>
-import DxScheduler from "devextreme-vue/scheduler";
+import { DxScheduler } from "devextreme-vue/scheduler";
+//import { DxPopup } from "devextreme-vue/popup";
+//import { DxScrollView } from "devextreme-vue/scroll-view"
 
 import { data, rows, seats } from "./data.js";
 
 export default {
-  name: "Home",
-  props: {
-    msg: String,
-  },
+  name: "Home", 
   components: {
     DxScheduler,
   },
@@ -38,6 +38,8 @@ export default {
       seats: seats,
       views: ["day", "timelineDay"],
       currentDate: new Date(2015, 4, 25),
+      editAppointmentData: {},
+      isCustomPopupVisible: false
     };
   },
   computed: {
@@ -46,8 +48,12 @@ export default {
     },
   },
   methods: {
-    clickHandler() {
-      this.count += 1;
+    onAppointmentFormOpening(e) {
+      e.cancel = true;
+      this.editAppointmentData = { ...e.appointmentData };    
+      if(this.editAppointmentData.id){
+        this.isCustomPopupVisible = true;
+      }      
     },
   },
 };
