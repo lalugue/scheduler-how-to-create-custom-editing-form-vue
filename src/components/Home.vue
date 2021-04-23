@@ -23,6 +23,8 @@
     :width="500"
     :closeOnOutsideClick="true"
     v-model:visible="isCustomPopupVisible"
+    :title="editAppointmentData.text"
+    :on-hiding="onHiding"
     >
     <template #content>
       <DxScrollView
@@ -108,12 +110,15 @@ export default {
     };
   }, 
   methods: {
-    onAppointmentFormOpening(e) {
+    onAppointmentFormOpening(e){
       e.cancel = true;
       this.editAppointmentData = { ...e.appointmentData };    
       if(this.editAppointmentData.id){
         this.isCustomPopupVisible = true;
       }      
+    },
+    onHiding(){
+      this.editAppointmentData = {};
     },
     formatDate
   },
