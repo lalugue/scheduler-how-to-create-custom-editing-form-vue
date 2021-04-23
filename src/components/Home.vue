@@ -24,6 +24,15 @@
     :closeOnOutsideClick="true"
     v-model:visible="isCustomPopupVisible"
     >
+    <template #content>
+      <DxScrollView
+        width="100%"
+        height="100%"
+      >       
+      <img :src="editAppointmentData.image" class="dx-field-label" />
+      
+      </DxScrollView>
+    </template>
   </DxPopup>
 
 </template>
@@ -31,7 +40,8 @@
 <script>
 import { DxScheduler } from "devextreme-vue/scheduler";
 import { DxPopup } from "devextreme-vue/popup";
-//import { DxScrollView } from "devextreme-vue/scroll-view"
+import { DxScrollView } from "devextreme-vue/scroll-view"
+//import {DxSelectBox} from "devextreme-vue/select-box"
 
 import { data, rows, seats } from "./data.js";
 
@@ -39,7 +49,9 @@ export default {
   name: "Home", 
   components: {
     DxScheduler,
-    DxPopup
+    DxPopup,
+    DxScrollView,
+    //DxSelectBox
   },
   data() {
     return {
