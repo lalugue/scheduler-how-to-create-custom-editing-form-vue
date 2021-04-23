@@ -7,22 +7,30 @@
     id="scheduler"
     :data-source="dataSource"
     :views="views"
-    currentView="day"
-    :currentDate="currentDate"
-    :firstDayOfWeek="0"
-    :startDayHour="9"
-    :endDayHour="23"
-    :showAllDayPanel="false"
+    current-view="day"
+    :current-date="currentDate"
+    :first-day-of-week="0"
+    :start-day-hour="9"
+    :end-day-hour="23"
+    :show-all-day-panel="false"
     :height="600"
-    @onAppointmentFormOpening="onAppointmentFormOpening"
+    :on-appointment-form-opening="onAppointmentFormOpening"
     :editing="editing"
   >
   </DxScheduler>
+
+  <DxPopup
+    :width="500"
+    :closeOnOutsideClick="true"
+    v-model:visible="isCustomPopupVisible"
+    >
+  </DxPopup>
+
 </template>
 
 <script>
 import { DxScheduler } from "devextreme-vue/scheduler";
-//import { DxPopup } from "devextreme-vue/popup";
+import { DxPopup } from "devextreme-vue/popup";
 //import { DxScrollView } from "devextreme-vue/scroll-view"
 
 import { data, rows, seats } from "./data.js";
@@ -31,6 +39,7 @@ export default {
   name: "Home", 
   components: {
     DxScheduler,
+    DxPopup
   },
   data() {
     return {
@@ -43,12 +52,7 @@ export default {
       isCustomPopupVisible: false,
       editing: {allowResizing: false, allowDragging: false}
     };
-  },
-  computed: {
-    getText() {
-      return `Click count: ${this.count}`;
-    },
-  },
+  }, 
   methods: {
     onAppointmentFormOpening(e) {
       e.cancel = true;
