@@ -5,7 +5,7 @@
 <script>
 
 import 'devextreme/dist/css/dx.common.css';
-import 'devextreme/dist/css/dx.material.blue.light.compact.css'
+import 'devextreme/dist/css/dx.light.css'
 import Home from './components/Home.vue'
 
 export default {
