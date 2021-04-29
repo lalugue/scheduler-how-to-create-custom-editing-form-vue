@@ -76,13 +76,19 @@
       </DxSelectBox>
       </DxScrollView>
     </template>
+    <DxToolbarItem
+    widget="dxButton"
+    toolbar="bottom"
+    location="after"
+    :options="buttonOptions">
+    </DxToolbarItem>
   </DxPopup>
 
 </template>
 
 <script>
 import { DxScheduler } from "devextreme-vue/scheduler";
-import { DxPopup } from "devextreme-vue/popup";
+import  DxPopup, {DxToolbarItem}  from "devextreme-vue/popup";
 import { DxScrollView } from "devextreme-vue/scroll-view"
 import {DxSelectBox} from "devextreme-vue/select-box"
 import { formatDate } from "devextreme/localization";
@@ -94,6 +100,7 @@ export default {
   components: {
     DxScheduler,
     DxPopup,
+    DxToolbarItem,
     DxScrollView,
     DxSelectBox
   },
@@ -106,7 +113,11 @@ export default {
       currentDate: new Date(2015, 4, 25),
       editAppointmentData: {},
       isCustomPopupVisible: false,
-      editing: {allowResizing: false, allowDragging: false}
+      editing: {allowResizing: false, allowDragging: false},
+      buttonOptions: {
+        text: "OK",
+        onClick: this.updateAppointment
+      }
     };
   }, 
   methods: {
@@ -120,7 +131,10 @@ export default {
     onHiding(){
       this.editAppointmentData = {};
     },
-    formatDate
+    updateAppointment(){
+      alert("updateAppointment");
+    },
+    formatDate  
   },
 };
 </script>
