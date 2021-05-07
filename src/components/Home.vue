@@ -3,9 +3,10 @@
     <h3>DXCinema Upcoming Movies</h3>
   </div>
 
-  <DxScheduler
+  <DxScheduler    
     id="scheduler"
     :data-source="dataSource"
+    @initialized="onInitialized"
     :views="views"
     current-view="day"
     :current-date="currentDate"
@@ -87,6 +88,7 @@ import DxPopup, { DxToolbarItem } from "devextreme-vue/popup";
 import { DxScrollView } from "devextreme-vue/scroll-view";
 import { DxSelectBox } from "devextreme-vue/select-box";
 import { formatDate } from "devextreme/localization";
+import { notify } from 'devextreme/ui/notify';
 
 import { data, rows, seats } from "./data.js";
 
@@ -102,6 +104,7 @@ export default {
   data() {
     return {
       dataSource: data,
+      scheduler: null,
       rows: rows,
       seats: seats,
       views: ["day", "timelineDay"],
@@ -116,6 +119,9 @@ export default {
     };
   },
   methods: {
+    onInitialized(e){      
+      this.scheduler = e.component;
+    },
     onAppointmentFormOpening(e) {
       e.cancel = true;
       this.editAppointmentData = { ...e.appointmentData };
@@ -127,7 +133,35 @@ export default {
       this.editAppointmentData = {};
     },
     updateAppointment() {
-      alert("updateAppointment");
+      if (this.editAppointmentData.seatRow && this.editAppointmentData.seatNumber){        
+        const oldAppointmentData = data.find(item => item.id === this.editAppointmentData.id);
+        this.scheduler.updateAppointment(
+          oldAppointmentData,
+          this.editAppointmentData
+        );    
+        notify(`Selected seat ${this.editAppointmentData.seatRow}${this.editAppointmentData.seatNumber} for ${this.editAppointmentData.text}. Enjoy!`);
+      }
+      this.isCustomPopupVisible = false;
+    },
+    setSeatPrice(basePrice, row){
+      let rowPrice;
+      switch (row){
+        case 'A':
+          rowPrice = 1;
+          break;
+        case 'B':
+          rowPrice = 2;
+          break;
+        case 'C':
+          rowPrice = 3;
+          break;
+        case 'D':
+          rowPrice = 4;
+          break;
+        default:
+          break;
+      }
+      return basePrice * rowPrice;
     },
     formatDate,
   },
