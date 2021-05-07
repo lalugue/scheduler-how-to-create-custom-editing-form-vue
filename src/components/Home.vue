@@ -88,7 +88,7 @@ import DxPopup, { DxToolbarItem } from "devextreme-vue/popup";
 import { DxScrollView } from "devextreme-vue/scroll-view";
 import { DxSelectBox } from "devextreme-vue/select-box";
 import { formatDate } from "devextreme/localization";
-import { notify } from 'devextreme/ui/notify';
+import notify from 'devextreme/ui/notify';
 
 import { data, rows, seats } from "./data.js";
 
@@ -114,7 +114,7 @@ export default {
       editing: { allowResizing: false, allowDragging: false },
       buttonOptions: {
         text: "OK",
-        onClick: this.updateAppointment,
+        onClick: this.updateBooking,
       },
     };
   },
@@ -132,13 +132,13 @@ export default {
     onHiding() {
       this.editAppointmentData = {};
     },
-    updateAppointment() {
-      if (this.editAppointmentData.seatRow && this.editAppointmentData.seatNumber){        
-        const oldAppointmentData = data.find(item => item.id === this.editAppointmentData.id);
+    updateBooking() {
+      if (this.editAppointmentData.seatRow && this.editAppointmentData.seatNumber){            
+        const oldAppointmentData = this.dataSource.find(item => item.id === this.editAppointmentData.id);         
         this.scheduler.updateAppointment(
           oldAppointmentData,
           this.editAppointmentData
-        );    
+        );         
         notify(`Selected seat ${this.editAppointmentData.seatRow}${this.editAppointmentData.seatNumber} for ${this.editAppointmentData.text}. Enjoy!`);
       }
       this.isCustomPopupVisible = false;
@@ -164,6 +164,7 @@ export default {
       return basePrice * rowPrice;
     },
     formatDate,
+    notify
   },
 };
 </script>
