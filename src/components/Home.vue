@@ -15,8 +15,7 @@
     :show-all-day-panel="false"
     :height="600"
     :on-appointment-form-opening="onAppointmentFormOpening"
-    :editing="editing"
-  >
+    :editing="editing">
   </DxScheduler>
 
   <DxPopup
@@ -24,85 +23,81 @@
     :closeOnOutsideClick="true"
     v-model:visible="isCustomPopupVisible"
     :title="editAppointmentData.text"
-    :on-hiding="onHiding"
-    >
+    :on-hiding="onHiding">
     <template #content>
-      <DxScrollView
-        width="100%"
-        height="100%"
-      >       
-      <img :src="editAppointmentData.image" class="dx-field-label" />
-      <div class="dx-field-label">
-        <p>
-          <b>{{ editAppointmentData.text }}</b>
-        </p>
-        <p>Year: {{ editAppointmentData.year }}</p>
-        <p>Duration: {{ editAppointmentData.duration }} minutes</p>
-      </div>
+      <DxScrollView width="100%" height="100%">
+        <img :src="editAppointmentData.image" class="dx-field-label" />
+        <div class="dx-field-label">
+          <p>
+            <b>{{ editAppointmentData.text }}</b>
+          </p>
+          <p>Year: {{ editAppointmentData.year }}</p>
+          <p>Duration: {{ editAppointmentData.duration }} minutes</p>
+        </div>
 
-      <div class="dx-field-label">
-        <b>{{ formatDate(editAppointmentData.startDate, "shortTime") }} -
-          {{ formatDate(editAppointmentData.endDate, "shortTime") }}</b>
-      </div>
+        <div class="dx-field-label">
+          <b
+            >{{ formatDate(editAppointmentData.startDate, "shortTime") }} -
+            {{ formatDate(editAppointmentData.endDate, "shortTime") }}</b>
+        </div>
 
-      <div class="dx-field-label"><b>Price ($): </b></div>
-      <div id="priceView" class="dx-field-label">
-        {{
-          editAppointmentData.seatRow && editAppointmentData.seatNumber
-            ? setSeatPrice(
-                editAppointmentData.price,
-                editAppointmentData.seatRow
-              )
-            : "Pick a seat for pricing"
-        }}
-      </div>      
+        <div class="dx-field-label"><b>Price ($): </b></div>
+        <div id="priceView" class="dx-field-label">
+          {{
+            editAppointmentData.seatRow && editAppointmentData.seatNumber
+              ? setSeatPrice(
+                  editAppointmentData.price,
+                  editAppointmentData.seatRow
+                )
+              : "Pick a seat for pricing"
+          }}
+        </div>
 
-      <DxSelectBox
-        id="rowView"
-        class="dx-field-label"
-        :dataSource="rows"
-        :width="400"
-        placeholder="Pick a row"
-        v-model:value="editAppointmentData.seatRow">
-      </DxSelectBox>
+        <DxSelectBox
+          id="rowView"
+          class="dx-field-label"
+          :dataSource="rows"
+          :width="400"
+          placeholder="Pick a row"
+          v-model:value="editAppointmentData.seatRow">
+        </DxSelectBox>
 
-      <DxSelectBox
-        id="seatView"
-        class="dx-field-label"
-        :dataSource="seats"
-        :width="400"
-        placeholder="Pick a seat"
-        v-model:value="editAppointmentData.seatNumber">
-      </DxSelectBox>
+        <DxSelectBox
+          id="seatView"
+          class="dx-field-label"
+          :dataSource="seats"
+          :width="400"
+          placeholder="Pick a seat"
+          v-model:value="editAppointmentData.seatNumber">
+        </DxSelectBox>
       </DxScrollView>
     </template>
     <DxToolbarItem
-    widget="dxButton"
-    toolbar="bottom"
-    location="after"
-    :options="buttonOptions">
+      widget="dxButton"
+      toolbar="bottom"
+      location="after"
+      :options="buttonOptions">
     </DxToolbarItem>
   </DxPopup>
-
 </template>
 
 <script>
 import { DxScheduler } from "devextreme-vue/scheduler";
-import  DxPopup, {DxToolbarItem}  from "devextreme-vue/popup";
-import { DxScrollView } from "devextreme-vue/scroll-view"
-import {DxSelectBox} from "devextreme-vue/select-box"
+import DxPopup, { DxToolbarItem } from "devextreme-vue/popup";
+import { DxScrollView } from "devextreme-vue/scroll-view";
+import { DxSelectBox } from "devextreme-vue/select-box";
 import { formatDate } from "devextreme/localization";
 
 import { data, rows, seats } from "./data.js";
 
 export default {
-  name: "Home", 
+  name: "Home",
   components: {
     DxScheduler,
     DxPopup,
     DxToolbarItem,
     DxScrollView,
-    DxSelectBox
+    DxSelectBox,
   },
   data() {
     return {
@@ -113,28 +108,28 @@ export default {
       currentDate: new Date(2015, 4, 25),
       editAppointmentData: {},
       isCustomPopupVisible: false,
-      editing: {allowResizing: false, allowDragging: false},
+      editing: { allowResizing: false, allowDragging: false },
       buttonOptions: {
         text: "OK",
-        onClick: this.updateAppointment
-      }
+        onClick: this.updateAppointment,
+      },
     };
-  }, 
+  },
   methods: {
-    onAppointmentFormOpening(e){
+    onAppointmentFormOpening(e) {
       e.cancel = true;
-      this.editAppointmentData = { ...e.appointmentData };    
-      if(this.editAppointmentData.id){
+      this.editAppointmentData = { ...e.appointmentData };
+      if (this.editAppointmentData.id) {
         this.isCustomPopupVisible = true;
-      }      
+      }
     },
-    onHiding(){
+    onHiding() {
       this.editAppointmentData = {};
     },
-    updateAppointment(){
+    updateAppointment() {
       alert("updateAppointment");
     },
-    formatDate  
+    formatDate,
   },
 };
 </script>
