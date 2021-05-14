@@ -5,8 +5,7 @@
 
   <DxScheduler    
     id="scheduler"
-    :data-source="dataSource"
-    @initialized="onInitialized"
+    :data-source="dataSource"    
     :views="views"
     current-view="day"
     :current-date="currentDate"
@@ -15,7 +14,8 @@
     :end-day-hour="23"
     :show-all-day-panel="false"
     :height="600"
-    :on-appointment-form-opening="onAppointmentFormOpening"
+    @initialized="onInitialized"
+    @appointment-form-opening="onAppointmentFormOpening"
     :editing="editing">
   </DxScheduler>
 
@@ -24,7 +24,7 @@
     :closeOnOutsideClick="true"
     v-model:visible="isCustomPopupVisible"
     :title="editAppointmentData.text"
-    :on-hiding="onHiding">
+    @hiding="onHiding">
     <template #content>
       <DxScrollView width="100%" height="100%">
         <img :src="editAppointmentData.image" class="dx-field-label" />
