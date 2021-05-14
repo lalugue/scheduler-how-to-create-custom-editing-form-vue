@@ -119,20 +119,20 @@ export default {
     };
   },
   methods: {
-    onInitialized(e){      
+    onInitialized: function(e){      
       this.scheduler = e.component;
     },
-    onAppointmentFormOpening(e) {
+    onAppointmentFormOpening: function(e){
       e.cancel = true;
       this.editAppointmentData = { ...e.appointmentData };
       if (this.editAppointmentData.id) {
         this.isCustomPopupVisible = true;
       }
     },
-    onHiding() {
+    onHiding: function(){
       this.editAppointmentData = {};
     },
-    updateBooking() {
+    updateBooking: function(){
       if (this.editAppointmentData.seatRow && this.editAppointmentData.seatNumber){            
         const oldAppointmentData = this.dataSource.find(item => item.id === this.editAppointmentData.id);         
         this.scheduler.updateAppointment(
@@ -143,7 +143,7 @@ export default {
       }
       this.isCustomPopupVisible = false;
     },
-    setSeatPrice(basePrice, row){
+    setSeatPrice: function(basePrice, row){
       let rowPrice;
       switch (row){
         case 'A':
