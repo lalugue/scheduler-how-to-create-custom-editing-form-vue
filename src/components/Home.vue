@@ -5,6 +5,7 @@
 
   <DxScheduler    
     id="scheduler"
+    :ref="schedulerRefKey"
     :data-source="dataSource"    
     :views="views"
     current-view="day"
@@ -13,8 +14,7 @@
     :start-day-hour="9"
     :end-day-hour="23"
     :show-all-day-panel="false"
-    :height="600"
-    @initialized="onInitialized"
+    :height="600"    
     @appointment-form-opening="onAppointmentFormOpening"
     :editing="editing">
   </DxScheduler>
@@ -103,8 +103,8 @@ export default {
   },
   data() {
     return {
-      dataSource: data,
-      scheduler: null,
+      schedulerRefKey: "schedulerInstance",
+      dataSource: data,      
       rows: rows,
       seats: seats,
       views: ["day", "timelineDay"],
@@ -118,10 +118,12 @@ export default {
       },
     };
   },
-  methods: {
-    onInitialized: function(e){      
-      this.scheduler = e.component;
+  computed: {
+    scheduler: function () {
+      return this.$refs["schedulerInstance"].instance;
     },
+  },
+  methods: {    
     onAppointmentFormOpening: function(e){
       e.cancel = true;
       this.editAppointmentData = { ...e.appointmentData };
