@@ -21,7 +21,7 @@
 
   <DxPopup
     :width="500"
-    :closeOnOutsideClick="true"
+    :close-on-outside-click="true"
     v-model:visible="isCustomPopupVisible"
     :title="editAppointmentData.text"
     @hiding="onHiding">
@@ -57,7 +57,7 @@
         <DxSelectBox
           id="rowView"
           class="dx-field-label"
-          :dataSource="rows"
+          :data-source="rows"
           :width="400"
           placeholder="Pick a row"
           v-model:value="editAppointmentData.seatRow">
@@ -66,7 +66,7 @@
         <DxSelectBox
           id="seatView"
           class="dx-field-label"
-          :dataSource="seats"
+          :data-source="seats"
           :width="400"
           placeholder="Pick a seat"
           v-model:value="editAppointmentData.seatNumber">
